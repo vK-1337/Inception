@@ -45,11 +45,13 @@ wp core install --url="$DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN
 #create a new user with the given username, email, password and role
 wp user create "$WP_U_NAME" "$WP_U_EMAIL" --user_pass="$WP_U_PASS" --role="$WP_U_ROLE" --allow-root
 
+wp theme install astra
+
+wp theme activate astra
+
 wp plugin install redis-cache --activate --allow-root
 
-echo "define('WP_CACHE', true);" >> /var/www/wordpress/wp-config.php
-echo "define('REDIS_HOST', 'redis');" >> /var/www/wordpress/wp-config.php
-echo "define('REDIS_PORT', 6379);" >> /var/www/wordpress/wp-config.php
+wp config set WP_REDIS_HOST "redis" --allow-root
 
 wp redis enable --allow-root
 
